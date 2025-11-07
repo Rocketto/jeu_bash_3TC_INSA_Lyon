@@ -15,6 +15,10 @@ bloc1-bloc2-bloc3
 ```
 
 ---
+## Note Préliminaire
+ J'ai légèrement amélioré le jeu par rapport à ce midi concernant la génération du troisième bloc de la clé finale. La génération est maintenant aléatoire contrairement à ce midi ou le bloc 3 était toujours le même.
+
+---
 
 ##  Structure du laboratoire
 
@@ -40,7 +44,7 @@ Chaque dossier correspond à un équipement réseau contenant une énigme UNIX �
 
 ##  Commandes UNIX utilisées
 
-Les énigmes du jeu nécessitent uniquement des **commandes standards UNIX**.
+Les énigmes du jeu nécessitent uniquement des **commandes standards UNIX**, telles que:
 
 | Commande | Rôle principal |
 |-----------|----------------|
@@ -50,10 +54,9 @@ Les énigmes du jeu nécessitent uniquement des **commandes standards UNIX**.
 | `cat` | Lire le contenu d’un fichier |
 | `grep` | Chercher du texte dans un fichier |
 | `cut` | Extraire une colonne d’une ligne |
-| `awk` | Extraire des motifs et filtrer du texte |
 | `chmod` | Modifier les permissions d’un fichier |
 | `base64 -D` *(macOS)* / `base64 -d` *(Linux)* | Décoder un texte encodé en Base64 |
-| `echo`, `tr`, `head`, `tail` | Commandes d’affichage et de traitement simples |
+| `echo` | Afficher du texte dans le terminal (ou ailleurs)|
 
  Ces commandes suffisent pour terminer le jeu sans aucun outil externe.
 
@@ -65,7 +68,6 @@ Les énigmes du jeu nécessitent uniquement des **commandes standards UNIX**.
 |-----------|-------------|
 | `./game.sh new` | Crée une nouvelle partie NetLab |
 | `./game.sh start` | Affiche le briefing et les instructions |
-| `./game.sh hint <n>` | Donne un indice pour le palier *n* (1 = Switch, 2 = DHCP, 3 = Firewall) |
 | `./game.sh check bloc1-bloc2-bloc3` | Vérifie la clé finale |
 | `./game.sh reset` | Supprime la partie en cours |
 | `./game.sh help` | Affiche l’aide du jeu |
@@ -75,7 +77,7 @@ Les énigmes du jeu nécessitent uniquement des **commandes standards UNIX**.
 ##  Règles du jeu
 
 1. **Tout se joue dans le terminal.**  
-   Aucune interface graphique : seules les commandes UNIX sont autorisées.
+   Aucune interface graphique : seules les commandes UNIX sont autorisées(et à la limite copier et coller des lignes).
 
 2. **Le joueur ne doit pas modifier les fichiers** du jeu.  
    L’objectif est d’explorer et de lire, pas d’éditer ou de supprimer.
@@ -84,14 +86,11 @@ Les énigmes du jeu nécessitent uniquement des **commandes standards UNIX**.
    Le fichier `.netlab_dir` indique la session active.  
    Pour recommencer : `./game.sh reset` puis `./game.sh new`.
 
-4. **Les indices coûtent des points.**  
-   Chaque utilisation de `./game.sh hint <n>` inflige une pénalité.
-
-5. **Le score final** dépend du temps écoulé et du nombre d’indices utilisés.
+4. **Une fois la partie terminée** vous aurez un message de félicitations ainsi que le temps que vous avez mis à terminer le jeu.
 
 ---
 
-##  Déroulement du jeu
+##  Déroulement du jeu(Comment pouvoir le terminer)
 
 ###  Étape 1 — Le Switch (bloc1)
 - Le joueur explore le dossier `rack_switch/`.
@@ -130,7 +129,7 @@ Les énigmes du jeu nécessitent uniquement des **commandes standards UNIX**.
   ```
 - Exemple de commande :
   ```bash
-  grep X-Encoded fw/fw.log | awk -F': ' '{print $2}' | base64 -D
+  <message encodé>> base64 -D
   ```
 
 ---
@@ -142,9 +141,7 @@ Une fois les trois blocs trouvés, le joueur assemble la clé :
 ```
 Le jeu affiche :
 -  si la clé est correcte,  
--  le temps total,  
--  le nombre d’indices utilisés,  
--  et le score final.
+-  le temps total
 
 ---
 
@@ -170,7 +167,7 @@ grep X-Encoded netlab_1730/fw/fw.log | awk -F': ' '{print $2}' | base64 -D
 Sortie :
 ```
  Correct !
- temps:42s |  indices: 1 |  score: 9258
+ temps:42s
 ```
 
 ---
@@ -178,4 +175,4 @@ Sortie :
 ##  Auteur
 **Ugo Martin**  
 Projet PIT — INSA Lyon, 2025  
-Jeu écrit entièrement en **Bash** pour macOS.
+Jeu écrit entièrement en **Bash** pour macOS et Linux.
