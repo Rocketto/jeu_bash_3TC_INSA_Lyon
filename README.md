@@ -129,7 +129,7 @@ Les énigmes du jeu nécessitent uniquement des **commandes standards UNIX**, te
   ```
 - Exemple de commande :
   ```bash
-  <message encodé>> base64 -D
+  echo YmxvYzM9ZGVsdGE= | base64 -D
   ```
 
 ---
